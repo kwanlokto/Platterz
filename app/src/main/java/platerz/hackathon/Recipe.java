@@ -4,6 +4,8 @@ import android.media.Image;
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
+
+import java.net.URL;
 import java.util.*;
 import java.io.*;
 
@@ -15,7 +17,7 @@ public class Recipe {
     static final int Short = 40;
     static final int Medium = 90;
     static final String meat[] = {"beef", "chicken", "pork", "ham", "bacon", "sheppard", "sausage"};
-    private Image image;
+    private URL image;
     private String name;
     private ArrayList<String> tags = new ArrayList<>();
     private String instructions = "";
@@ -40,6 +42,7 @@ public class Recipe {
             Elements instructionsE = doc.select("span.recipe-directions__list--item"); //Get the instructions
             Element img = doc.select("img[src~=.jpg]").first(); //get the picture
             String imgUrl = img.absUrl("src");
+            image = new URL(imgUrl);
             System.out.println(imgUrl);
             for (Element e: ingredientsE) {
                 if (!e.text().equals("Add all ingredients to list")) {
@@ -135,8 +138,23 @@ public class Recipe {
         }
     }
 
+    public String getInstructions(){
+        return instructions;
+    }
+
+    public String getIngredients(){
+        return ingredients;
+    }
+
     public ArrayList<String> getTags() {
         return (ArrayList<String>)tags.clone();
     }
 
+    public URL getImage(){
+        return image;
+    }
+
+    public boolean equals(Recipe r2) {
+        return this.getInstructions().equals(r2.getInstructions()) && this.getIngredients().equals(r2.getIngredients());
+    }
 }

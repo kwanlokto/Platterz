@@ -11,8 +11,8 @@ import java.util.HashSet;
 
 public class RecipeBook {
 
-    static HashMap<String, HashSet<Recipe>> recipeBook = new HashMap<>();
-    private HashSet<Recipe> cookBook;
+    static HashMap<String, ArrayList<Recipe>> recipeBook = new HashMap<>();
+    private ArrayList<Recipe> cookBook = null;
 
     public RecipeBook() {
         Recipe spicyChicken = new Recipe("http://allrecipes.com/recipe/257938/spicy-thai-basil-chicken-pad-krapow-gai/");
@@ -29,24 +29,41 @@ public class RecipeBook {
 
     }
 
-    public void getUserBook(User user) {
-        cookBook = search(user.getRestrictions());
+    public ArrayList<Recipe> getUserBook(User user) {
+        if (cookBook == null) {
+            cookBook = search(user.getRestrictions());
+        }
+        return cookBook;
     }
 
-    public HashSet<Recipe> search(ArrayList<String> tags) {
-        HashSet<Recipe> matches;
-        if (tags.isEmpty()) {
-            matches = new HashSet<>();
-        } else {
-            int i = 0;
-            matches = new HashSet<>(recipeBook.get(tags.get(i)));
-            i++;
-            while (i < tags.size()) {
-                (recipeBook.get(tags.get(i))).retainAll(matches);
-                if (matches.isEmpty()) break;
-                i++;
+    public ArrayList<Recipe> search(ArrayList<String> tags) {
+        ArrayList<Recipe> matches = new ArrayList<>();
+        if (!tags.isEmpty()) {
+            matches = recipeBook.get(tags.get(0));
+            for (String tag : tags) {
+                for (Recipe recipe : matches) {
+                    if (!recipeBook.get(tag).contains(recipe)) {
+                        matches.remove(recipe);
+                    }
+                    if (matches.isEmpty()) {
+                        break;
+                    }
+                }
             }
         }
+//        HashSet<Recipe> matches;
+//        if (tags.isEmpty()) {
+//            matches = new HashSet<>();
+//        } else {
+//            int i = 0;
+//            matches = new HashSet<>(recipeBook.get(tags.get(i)));
+//            i++;
+//            while (i < tags.size()) {
+//                (recipeBook.get(tags.get(i))).retainAll(matches);
+//                if (matches.isEmpty()) break;
+//                i++;
+//            }
+//        }
         return matches;
     }
 
@@ -55,14 +72,18 @@ public class RecipeBook {
         for (String tag : tags) {
             //If the the key already exists
             if (!recipeBook.containsKey(tag)) {
-                HashSet<Recipe> hs = new HashSet<>();
+                ArrayList<Recipe> hs = new ArrayList<>();
                 hs.add(recipe);
                 recipeBook.put(tag, hs);
             }
-            else {
-                HashSet<Recipe> hs = recipeBook.get(tag);
-                hs.add(recipe);
+            else{
+                ArrayList<Recipe> hs = recipeBook.get(tag);
+                if (!hs.contains(recipe)) {
+                    hs.add(recipe);
+                }
             }
         }
     }
+
+
 }

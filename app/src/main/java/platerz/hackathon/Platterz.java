@@ -6,12 +6,22 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.support.v7.widget.*;
 import android.view.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.IOException;
+import java.net.URL;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+
 public class Platterz extends AppCompatActivity implements View.OnClickListener{
 
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
     }
+    public static ArrayList<Recipe> userBook;
     public static User user;
     public static RecipeBook cookBook = new RecipeBook(); // NEED TO ADD ALL RECIPES
     public static int count = 0;
@@ -54,7 +64,7 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
         //If the login Button is clicked
         if (view.getId() == R.id.Login) {
             boolean found = false;
-
+            userBook = cookBook.getUserBook(user);
             //NEED TO STORE USER NAMES
             if (found) {
                 setContentView(R.layout.swipe_recipes);
@@ -65,6 +75,7 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
             String name = ((TextView)findViewById(R.id.UserName)).getText().toString();
             String password = ((TextView)findViewById(R.id.Password)).getText().toString();
             user = new User(name, password);
+            userBook = cookBook.getUserBook(user);
             setContentView(R.layout.register_exp);
         }
         else if (view.getId() == R.id.Beginner) {
@@ -78,6 +89,17 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
         }
         else if (view.getId() == R.id.Add) {
             //user.addRecipe();
+        }
+    }
+
+    public void updateRecipe() {
+        try {
+            URL url = userBook.get(count).getImage();
+            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+        }
+        catch (IOException e){
+            e.printStackTrace();
         }
     }
 
