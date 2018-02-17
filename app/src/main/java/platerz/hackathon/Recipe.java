@@ -14,7 +14,7 @@ import java.io.*;
 public class Recipe {
     static final int Short = 40;
     static final int Medium = 90;
-    String meat[] = {"beef", "chicken", "pork", "ham", "bacon", "sheppard", "sausage"};
+    static final String meat[] = {"beef", "chicken", "pork", "ham", "bacon", "sheppard", "sausage"};
     Image image;
     String name;
     ArrayList<String> tags = new ArrayList<>();
@@ -23,11 +23,12 @@ public class Recipe {
     boolean vegan = true;
 
     public static void main(String[] args) {
-        Recipe recipe = new Recipe();
-        //TEST
-        recipe.readFile("http://allrecipes.com/recipe/235432/creamy-herbed-pork-chops/?internalSource=rotd&referringId=1947&referringContentType=recipe%20hub");
-        Recipe r = new Recipe();
-        r.readFile("http://allrecipes.com/recipe/241106/breakfast-casserole-in-a-slow-cooker/?internalSource=streams&referringId=253&referringContentType=recipe%20hub&clickId=st_recipes_mades");
+        Recipe recipe1 = new Recipe("http://allrecipes.com/recipe/235432/creamy-herbed-pork-chops/?internalSource=rotd&referringId=1947&referringContentType=recipe%20hub");
+        Recipe recipe2 = new Recipe("http://allrecipes.com/recipe/241106/breakfast-casserole-in-a-slow-cooker/?internalSource=streams&referringId=253&referringContentType=recipe%20hub&clickId=st_recipes_mades");
+    }
+
+    public Recipe(String url){
+        readFile(url);
     }
 
     public void readFile(String url){
@@ -62,9 +63,12 @@ public class Recipe {
             System.out.print("File not found");
             e.printStackTrace();
         }
-
     }
 
+    /**
+     * Determines the time required to make the meal
+     * @param document
+     */
     public void determineTime(Document document) {
         Element readyTime = document.select("time").last();
         String timeInfo [] = readyTime.text().split(" ");
@@ -90,6 +94,49 @@ public class Recipe {
         else {
             tags.add("Long");
         }
+    }
+
+    /**
+     * Determine the healthiness of the meal based on the nutritional value
+     * @param document
+     */
+    public void getHealth(Document document){
+        Element calorieS = document.select("span.calories").last(); //gets the calorie count
+        Element fatS = document.select("span.fatContent").last();
+        Element carbsS = document.select("span.carbohydrateContent").last();
+        Element proteinS = document.select("span.proteinContent").last();
+
+        int calorie = Integer.parseInt(calorieS.text());
+        int fat = Integer.parseInt(fatS.text());
+        int carbs = Integer.parseInt(carbsS.text());
+        int protein = Integer.parseInt(proteinS.text());
+
+        int count = 0;
+        if (calorie < 1000 && calorie > 500) {
+            count++;
+        }
+        if (fat < 12 && fat > 7) {
+            count++;
+        }
+        if (carbs < 50 && carbs > 30) {
+            count++;
+        }
+        if (protein < 20 && protein > 10) {
+            count++;
+        }
+        if (count >= 3) {
+            tags.add("Healthy");
+        }
+        else if (count >= 1) {
+            tags.add("Moderately Healthy");
+        }
+        else {
+            tags.add("Unhealthy");
+        }
+    }
+
+    public ArrayList<String> getTags() {
+        return tags;
     }
 
 }
