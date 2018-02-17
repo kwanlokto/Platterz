@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="#cc8181">
     <ImageView
         android:id="@+id/recipePic"
         android:layout_width="353dp"
@@ -19,33 +19,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher" />
 
-    <EditText
-        android:id="@+id/Time"
-        android:layout_width="118dp"
-        android:layout_height="31dp"
-        android:ems="10"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="250dp"
-        tools:layout_editor_absoluteY="306dp" />
-
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="206dp"
         android:layout_height="140dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toStartOf="@+id/Time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipePic">
 
         <MultiAutoCompleteTextView
             android:id="@+id/Ingredients"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Ingredients"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
     </ScrollView>
 
     <ScrollView
@@ -65,7 +55,35 @@
         <MultiAutoCompleteTextView
             android:id="@+id/Instructions"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:text="Instructions"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
     </ScrollView>
+
+    <TextView
+        android:id="@+id/recipeName"
+        android:layout_width="123dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scrollView3"
+        app:layout_constraintTop_toBottomOf="@+id/recipePic" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="120dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="35dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="55dp"
+        android:text="Time: "
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scrollView3"
+        app:layout_constraintTop_toBottomOf="@+id/recipeName" />
 
 </android.support.constraint.ConstraintLayout>

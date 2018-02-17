@@ -1,6 +1,7 @@
 package platerz.hackathon;
 
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -10,13 +11,14 @@ import android.view.*;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
+import android.widget.ImageButton;
 import java.io.InputStream;
-import java.io.IOException;
 import java.net.URL;
+import android.os.*;
 import android.util.Log;
 
+
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Platterz extends AppCompatActivity implements View.OnClickListener{
 
@@ -26,25 +28,27 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
     }
     public static ArrayList<Recipe> userBook;
     public static User user;
-    public static RecipeBook cookBook = new RecipeBook(); // NEED TO ADD ALL RECIPES
+    public static RecipeBook cookBook; // NEED TO ADD ALL RECIPES
     public static int count = 0;
+    public static boolean navigating = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.opening_page);
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         //Add all actionlisteners to buttons
-        final Button login = findViewById(R.id.Login);
+        Button login = findViewById(R.id.Login);
         login.setOnClickListener(this);
-        final Button signUp = findViewById(R.id.signUp);
-        signUp.setOnClickListener(this);
-        final Button beginner = findViewById(R.id.Beginner);
-        beginner.setOnClickListener(this);
-        final Button average = findViewById(R.id.Average);
-        average.setOnClickListener(this);
-        final Button gourmet = findViewById(R.id.Gourmet);
-        gourmet.setOnClickListener(this);
 
+        Button sUp = findViewById(R.id.signUp);
+        sUp.setOnClickListener(this);
+
+
+        cookBook = new RecipeBook();
         //Toolbar stuff
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolBar);
@@ -67,11 +71,14 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
         //If the login Button is clicked
         if (view.getId() == R.id.Login) {
             boolean found = false;
-            userBook = cookBook.getUserBook(user);
+
             //NEED TO STORE USER NAMES
             if (found) {
+                userBook = cookBook.getUserBook(user);
                 setContentView(R.layout.swipe_recipes);
+
             }
+
         }
         //If we are signing up
         else if (view.getId() == R.id.signUp) {
@@ -79,25 +86,62 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
             String password = ((TextView)findViewById(R.id.Password)).getText().toString();
             user = new User(name, password);
             userBook = cookBook.getUserBook(user);
+            System.out.println("Users: "+user);
             setContentView(R.layout.register_exp);
+            Button beginner = findViewById(R.id.Beginner);
+            beginner.setOnClickListener(this);
+
+            Button average = findViewById(R.id.Average);
+            average.setOnClickListener(this);
+
+            Button gourmet = findViewById(R.id.Gourmet);
+            gourmet.setOnClickListener(this);
         }
         else if (view.getId() == R.id.Beginner) {
             user.setExp("Beginner");
+            createSwipe();
         }
         else if (view.getId() == R.id.Average) {
             user.setExp("Average");
+            createSwipe();
         }
         else if (view.getId() == R.id.Gourmet) {
             user.setExp("Gourmet");
+            createSwipe();
         }
-        else if (view.getId() == R.id.Add) {
+        else if (view.getId() == R.id.dislike) {
+            count++;
+            if (count == userBook.size()) count = 0;
+            updateRecipe(R.id.recipeImage);
+            ((TextView)findViewById(R.id.foodName)).setText(userBook.get(count).getName());
             //user.addRecipe();
+        }
+
+        else if(view.getId() == R.id.search){
+            setContentView(R.layout.recipe_info);
+            navigating = false;
+            updateRecipe(R.id.recipePic);
+            ((TextView)findViewById(R.id.recipeName)).setText(userBook.get(count).getName());
+            ((TextView)findViewById(R.id.Ingredients)).setText("Ingredients\n" + userBook.get(count).getIngredients());
+            ((TextView)findViewById(R.id.Instructions)).setText("Instructions\n" + userBook.get(count).getInstructions());
+            ((TextView)findViewById(R.id.time)).setText("Time: "+ Integer.toString(userBook.get(count).getTime())+"min");
         }
     }
 
-    public void updateRecipe() {
+    private void createSwipe(){
+        setContentView(R.layout.swipe_recipes);
+        updateRecipe(R.id.recipeImage);
+        ((TextView)findViewById(R.id.foodName)).setText(userBook.get(count).getName());
+        ImageButton dislike = findViewById(R.id.dislike);
+        dislike.setOnClickListener(this);
+        ImageButton search = findViewById(R.id.search);
+        search.setOnClickListener(this);
+
+    }
+
+    public void updateRecipe(int i) {
         URL url = userBook.get(count).getImage();
-        new DownloadImageTask((ImageView) findViewById(R.id.recipeImage))
+        new DownloadImageTask((ImageView) findViewById(i))
                 .execute(url.toString());
     }
 
@@ -123,6 +167,16 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
 
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!navigating) {
+            setContentView(R.layout.swipe_recipes);
+            updateRecipe(R.id.recipeImage);
+            ((TextView)findViewById(R.id.foodName)).setText(userBook.get(count).getName());
+            navigating = true;
         }
     }
 

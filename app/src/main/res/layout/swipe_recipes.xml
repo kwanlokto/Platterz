@@ -2,13 +2,14 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigatingPane"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/recipeImage"
-        android:layout_width="335dp"
-        android:layout_height="271dp"
+        android:layout_width="374dp"
+        android:layout_height="311dp"
         android:layout_marginBottom="175dp"
         android:layout_marginEnd="34dp"
         android:layout_marginStart="34dp"
@@ -18,33 +19,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@mipmap/ic_launcher" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/search"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="42dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="41dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/search"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Add"
+        app:layout_constraintEnd_toStartOf="@+id/dislike"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipeImage"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <ImageButton
-        android:id="@+id/Add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/dislike"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="42dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="41dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/cross"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageButton2"
+        app:layout_constraintStart_toEndOf="@+id/search"
         app:layout_constraintTop_toBottomOf="@+id/recipeImage"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
@@ -62,5 +70,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+    <TextView
+        android:id="@+id/foodName"
+        android:layout_width="204dp"
+        android:layout_height="34dp"
+        android:layout_marginBottom="17dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipeImage" />
 
 </android.support.constraint.ConstraintLayout>

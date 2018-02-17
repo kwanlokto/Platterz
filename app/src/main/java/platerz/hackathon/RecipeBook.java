@@ -10,8 +10,11 @@ import java.util.HashSet;
  */
 
 public class RecipeBook {
+    public static void main(String[] args) {
+        RecipeBook rb = new RecipeBook();
+    }
 
-    static HashMap<String, ArrayList<Recipe>> recipeBook = new HashMap<>();
+    public static HashMap<String, ArrayList<Recipe>> recipeBook = new HashMap<>();
     private ArrayList<Recipe> cookBook = null;
 
     public RecipeBook() {
@@ -30,41 +33,38 @@ public class RecipeBook {
     }
 
     public ArrayList<Recipe> getUserBook(User user) {
-        if (cookBook == null) {
+        ArrayList<Recipe> cookBook = new ArrayList<>();
+        if (user.getRestrictions().size() != 0) {
             cookBook = search(user.getRestrictions());
+        }
+        else {
+            for(ArrayList<Recipe> recipes : recipeBook.values()) {
+                for (Recipe recipe: recipes) {
+                    if (!cookBook.contains(recipe)) {
+                        cookBook.add(recipe);
+                    }
+                }
+            }
         }
         return cookBook;
     }
 
     public ArrayList<Recipe> search(ArrayList<String> tags) {
-        ArrayList<Recipe> matches = new ArrayList<>();
-        if (!tags.isEmpty()) {
-            matches = recipeBook.get(tags.get(0));
-            for (String tag : tags) {
-                for (Recipe recipe : matches) {
-                    if (!recipeBook.get(tag).contains(recipe)) {
-                        matches.remove(recipe);
-                    }
-                    if (matches.isEmpty()) {
-                        break;
-                    }
-                }
+        HashSet<Recipe> matches;
+        if (tags.isEmpty()) {
+            matches = new HashSet<>();
+        } else {
+            int i = 0;
+            matches = new HashSet<>(recipeBook.get(tags.get(i)));
+            i++;
+            while (i < tags.size()) {
+                (recipeBook.get(tags.get(i))).retainAll(matches);
+                if (matches.isEmpty()) break;
+                i++;
             }
         }
-//        HashSet<Recipe> matches;
-//        if (tags.isEmpty()) {
-//            matches = new HashSet<>();
-//        } else {
-//            int i = 0;
-//            matches = new HashSet<>(recipeBook.get(tags.get(i)));
-//            i++;
-//            while (i < tags.size()) {
-//                (recipeBook.get(tags.get(i))).retainAll(matches);
-//                if (matches.isEmpty()) break;
-//                i++;
-//            }
-//        }
-        return matches;
+        ArrayList<Recipe> list = new ArrayList<Recipe>(matches);
+        return list;
     }
 
     public void add(Recipe recipe) {
@@ -83,6 +83,7 @@ public class RecipeBook {
                 }
             }
         }
+        System.out.println("size: "+recipeBook.size());
     }
 
 

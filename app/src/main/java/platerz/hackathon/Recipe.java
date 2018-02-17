@@ -17,6 +17,7 @@ public class Recipe {
     static final int Short = 40;
     static final int Medium = 90;
     static final String meat[] = {"beef", "chicken", "pork", "ham", "bacon", "sheppard", "sausage"};
+    private int time;
     private URL image;
     private String name;
     private ArrayList<String> tags = new ArrayList<>();
@@ -87,6 +88,7 @@ public class Recipe {
                 }
             }
         }
+        time = tempTime;
         System.out.println(tempTime);
         if (tempTime < Short) {
             tags.add("Quick");
@@ -152,6 +154,14 @@ public class Recipe {
 
     public URL getImage(){
         return image;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public int getTime() {
+        return time;
     }
 
     public boolean equals(Recipe r2) {
