@@ -15,12 +15,12 @@ public class Recipe {
     static final int Short = 40;
     static final int Medium = 90;
     static final String meat[] = {"beef", "chicken", "pork", "ham", "bacon", "sheppard", "sausage"};
-    Image image;
-    String name;
-    ArrayList<String> tags = new ArrayList<>();
-    String instructions = "";
-    String ingredients = "";
-    boolean vegan = true;
+    private Image image;
+    private String name;
+    private ArrayList<String> tags = new ArrayList<>();
+    private String instructions = "";
+    private String ingredients = "";
+    private boolean vegan = true;
 
     public static void main(String[] args) {
         Recipe recipe1 = new Recipe("http://allrecipes.com/recipe/235432/creamy-herbed-pork-chops/?internalSource=rotd&referringId=1947&referringContentType=recipe%20hub");
@@ -136,7 +136,7 @@ public class Recipe {
     }
 
     public ArrayList<String> getTags() {
-        return tags;
+        return (ArrayList<String>)tags.clone();
     }
 
 }

@@ -11,7 +11,8 @@ import java.util.HashSet;
 
 public class RecipeBook {
 
-    HashMap<String, HashSet<Recipe>> recipeBook = new HashMap<>();
+    static HashMap<String, HashSet<Recipe>> recipeBook = new HashMap<>();
+    private HashSet<Recipe> cookBook;
 
     public RecipeBook() {
         Recipe spicyChicken = new Recipe("http://allrecipes.com/recipe/257938/spicy-thai-basil-chicken-pad-krapow-gai/");
@@ -20,10 +21,19 @@ public class RecipeBook {
         Recipe porkChopAmazing = new Recipe("http://allrecipes.com/recipe/240542/amazing-fried-pork-chops/");
         Recipe flatBread = new Recipe("http://allrecipes.com/recipe/262715/farinata-italian-flatbread/");
 
+        add(spicyChicken);
+        add(casserole);
+        add(porkChop);
+        add(porkChopAmazing);
+        add(flatBread);
 
     }
 
-    HashSet<Recipe> search(ArrayList<String> tags) {
+    public void getUserBook(User user) {
+        cookBook = search(user.getRestrictions());
+    }
+
+    public HashSet<Recipe> search(ArrayList<String> tags) {
         HashSet<Recipe> matches;
         if (tags.isEmpty()) {
             matches = new HashSet<>();
@@ -38,5 +48,21 @@ public class RecipeBook {
             }
         }
         return matches;
+    }
+
+    public void add(Recipe recipe) {
+        ArrayList<String> tags = recipe.getTags();
+        for (String tag : tags) {
+            //If the the key already exists
+            if (!recipeBook.containsKey(tag)) {
+                HashSet<Recipe> hs = new HashSet<>();
+                hs.add(recipe);
+                recipeBook.put(tag, hs);
+            }
+            else {
+                HashSet<Recipe> hs = recipeBook.get(tag);
+                hs.add(recipe);
+            }
+        }
     }
 }

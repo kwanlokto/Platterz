@@ -5,12 +5,12 @@ import java.util.*;
  */
 
 public class User {
-    String name;
-    String passWord;
-    String experience;
-    String demographics;
-    ArrayList<String> restrictions = new ArrayList<>();
-    ArrayList<Recipe> recipes = new ArrayList<>();
+    private String name;
+    private String passWord;
+    private String experience;
+    private String demographics;
+    private ArrayList<String> restrictions = new ArrayList<>();
+    private ArrayList<Recipe> recipes = new ArrayList<>();
 
     /**
      * When creating a new user object we must always include the name
@@ -56,6 +56,14 @@ public class User {
         if (displayRecipe(recipe)) {
             recipes.add(recipe);
         }
+    }
+
+    /**
+     * Get the dietary restrictions for this user
+     * @return the list of restrictions
+     */
+    public ArrayList<String> getRestrictions(){
+        return (ArrayList<String>) restrictions.clone();
     }
 }
 

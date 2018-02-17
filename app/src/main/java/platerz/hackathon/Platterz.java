@@ -13,7 +13,8 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
         System.loadLibrary("native-lib");
     }
     public static User user;
-    public static RecipeBook cookBook; // NEED TO ADD ALL RECIPESS
+    public static RecipeBook cookBook = new RecipeBook(); // NEED TO ADD ALL RECIPES
+    public static int count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,8 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
         average.setOnClickListener(this);
         final Button gourmet = findViewById(R.id.Gourmet);
         gourmet.setOnClickListener(this);
+
+        //Toolbar stuff
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(myToolbar);
@@ -77,4 +80,6 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
             //user.addRecipe();
         }
     }
+
+
 }
