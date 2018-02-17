@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/recipePic"
+        android:layout_width="353dp"
+        android:layout_height="252dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <EditText
+        android:id="@+id/Time"
+        android:layout_width="118dp"
+        android:layout_height="31dp"
+        android:ems="10"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="250dp"
+        tools:layout_editor_absoluteY="306dp" />
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="206dp"
+        android:layout_height="140dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toStartOf="@+id/Time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipePic">
+
+        <MultiAutoCompleteTextView
+            android:id="@+id/Ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="356dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/recipePic"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView3">
+
+        <MultiAutoCompleteTextView
+            android:id="@+id/Instructions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
