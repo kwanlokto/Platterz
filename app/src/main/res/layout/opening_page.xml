@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FA9D11"
     tools:context="platerz.hackathon.Platterz"
     >
 
@@ -58,6 +59,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="20dp"
         android:text="Login"
+        android:background="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/signUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.712"
@@ -72,6 +74,7 @@
         android:layout_marginRight="85dp"
         android:layout_marginLeft="211dp"
         android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
         android:text="Sign Up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

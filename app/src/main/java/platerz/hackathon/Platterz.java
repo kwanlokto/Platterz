@@ -200,11 +200,9 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onBackPressed() {
         if (!navigating) {
-            setContentView(R.layout.swipe_recipes);
-            updateRecipe(R.id.recipeImage);
-            ((TextView)findViewById(R.id.foodName)).setText(userBook.get(count).getName());
-            navigating = true;
+            createSwipe();
         }
+        navigating = true;
     }
 
 
