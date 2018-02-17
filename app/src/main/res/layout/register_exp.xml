@@ -16,13 +16,13 @@
         android:layout_marginTop="170dp"
         android:text="Are You?"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        app:layout_constraintBottom_toTopOf="@+id/button10"
+        app:layout_constraintBottom_toTopOf="@+id/Beginner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/Average"
         android:layout_width="214dp"
         android:layout_height="51dp"
         android:layout_marginBottom="10dp"
@@ -33,24 +33,24 @@
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button10" />
+        app:layout_constraintTop_toBottomOf="@+id/Beginner" />
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/Gourmet"
         android:layout_width="214dp"
         android:layout_height="51dp"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="85dp"
         android:layout_marginStart="85dp"
         android:layout_marginTop="10dp"
-        android:text="Beginner"
-        app:layout_constraintBottom_toTopOf="@+id/button12"
+        android:text="Gourmet"
+        app:layout_constraintBottom_toTopOf="@+id/Continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintTop_toBottomOf="@+id/Average" />
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/Beginner"
         android:layout_width="214dp"
         android:layout_height="51dp"
         android:layout_marginBottom="10dp"
@@ -58,13 +58,13 @@
         android:layout_marginStart="85dp"
         android:layout_marginTop="32dp"
         android:text="Beginner"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintBottom_toTopOf="@+id/Average"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
-        android:id="@+id/button12"
+        android:id="@+id/Continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
@@ -75,10 +75,10 @@
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button11" />
+        app:layout_constraintTop_toBottomOf="@+id/Gourmet" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/profilePic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="37dp"

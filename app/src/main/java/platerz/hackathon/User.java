@@ -6,6 +6,7 @@ import java.util.*;
 
 public class User {
     String name;
+    String passWord;
     String experience;
     String demographics;
     ArrayList<String> restrictions = new ArrayList<>();
@@ -15,12 +16,13 @@ public class User {
      * When creating a new user object we must always include the name
      * @param name
      */
-    public User(String name){
+    public User(String name, String passWord){
         this.name = name;
+        this.passWord = passWord;
     }
 
 
-    public void addExperience(String e) {
+    public void setExp(String e) {
         experience = e;
     }
     public void addDemographics(String d) {
