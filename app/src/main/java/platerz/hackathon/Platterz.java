@@ -1,5 +1,6 @@
 package platerz.hackathon;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -8,9 +9,11 @@ import android.support.v7.widget.*;
 import android.view.*;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
+import android.widget.ImageView;
+import java.io.InputStream;
 import java.io.IOException;
 import java.net.URL;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -93,13 +96,33 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void updateRecipe() {
-        try {
-            URL url = userBook.get(count).getImage();
-            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+        URL url = userBook.get(count).getImage();
+        new DownloadImageTask((ImageView) findViewById(R.id.recipeImage))
+                .execute(url.toString());
+    }
 
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
         }
-        catch (IOException e){
-            e.printStackTrace();
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
 
