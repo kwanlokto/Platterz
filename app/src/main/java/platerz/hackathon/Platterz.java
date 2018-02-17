@@ -1,5 +1,6 @@
 package platerz.hackathon;
 
+import android.gesture.GestureOverlayView;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,8 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
     public static RecipeBook cookBook; // NEED TO ADD ALL RECIPES
     public static int count = 0;
     public static boolean navigating = true;
+
+    private Toolbar myToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +54,7 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
         cookBook = new RecipeBook();
         //Toolbar stuff
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolBar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
 
@@ -131,6 +134,29 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
     private void createSwipe(){
         setContentView(R.layout.swipe_recipes);
         updateRecipe(R.id.recipeImage);
+        findViewById(R.id.recipeImage).setOnTouchListener(new OnSwipeTouchListener(this) {
+            public void onSwipeTop() {
+                //Toast.makeText(MyActivity.this, "top", Toast.LENGTH_SHORT).show();
+            }
+            public void onSwipeLeft() {
+                user.addRecipe(userBook.get(count));
+                count++;
+                if (count >= userBook.size()) count = 0;
+                updateRecipe(R.id.recipeImage);
+                ((TextView)findViewById(R.id.foodName)).setText(userBook.get(count).getName());
+            }
+            public void onSwipeRight() {
+                user.addRecipe(userBook.get(count));
+                count--;
+                if (count <= 0) count = userBook.size()-1;
+                updateRecipe(R.id.recipeImage);
+                ((TextView)findViewById(R.id.foodName)).setText(userBook.get(count).getName());
+            }
+            public void onSwipeBottom() {
+                //Toast.makeText(MyActivity.this, "bottom", Toast.LENGTH_SHORT).show();
+            }
+
+        });
         ((TextView)findViewById(R.id.foodName)).setText(userBook.get(count).getName());
         ImageButton dislike = findViewById(R.id.dislike);
         dislike.setOnClickListener(this);
@@ -144,6 +170,7 @@ public class Platterz extends AppCompatActivity implements View.OnClickListener{
         new DownloadImageTask((ImageView) findViewById(i))
                 .execute(url.toString());
     }
+
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
