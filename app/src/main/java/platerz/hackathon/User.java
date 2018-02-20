@@ -65,5 +65,7 @@ public class User {
     public ArrayList<String> getRestrictions(){
         return (ArrayList<String>) restrictions.clone();
     }
+
+
 }
 
